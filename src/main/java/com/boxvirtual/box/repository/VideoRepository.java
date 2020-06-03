@@ -15,7 +15,7 @@ public interface VideoRepository extends JpaRepository<video, Long> {
 
     @Query(value = "SELECT * FROM paciente.videousuario\n" +
             "WHERE id_usuario = :idUsuario\n"+
-            "order by fecha_hora desc limit 1",
+            "order by id desc limit 1",
             nativeQuery = true)
     video findByIdUsuarioUltimo(@Param("idUsuario") Long idUsuario);
 

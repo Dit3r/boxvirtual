@@ -134,7 +134,7 @@ public class VideoController {
             notes = "crear carta" ,
             response = video.class, responseContainer = "pos")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Carta creada con exito"),
+            @ApiResponse(code = 201, message = "Video Creado"),
             @ApiResponse(code = 400,message = "Falta el atributo"),
             @ApiResponse(code = 500,message = "Error interno del servidor"),
             @ApiResponse(code = 409,message = "La carta ya existe")
@@ -144,7 +144,7 @@ public class VideoController {
 
 
         video newVideo = VideoRepository.save(video);
-        logger.info("Carta creada");
+        logger.info("Video Creado");
         Resource<video> resource = new Resource<>(newVideo,
                 linkTo(methodOn(VideoController.class).one(newVideo.getId())).withSelfRel(),
                 linkTo(methodOn(VideoController.class).all()).withRel(VIDEO));
