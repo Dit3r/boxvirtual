@@ -43,11 +43,11 @@ public class UsuarioController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
-    @ApiOperation(value = "obtener todas las ordenes de compra",
-            notes = "obtener todas las Ordenes de compra" ,
+    @ApiOperation(value = "obtener todas los usuarios",
+            notes = "obtener todas los usuairos" ,
             response = usuario.class, responseContainer = "pos")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "listado de Ordenes"),
+            @ApiResponse(code = 200, message = "listado de usuarios"),
             @ApiResponse(code = 405,message = "Recurso no existe"),
             @ApiResponse(code = 500,message = "Error interno de servidor")
     })
@@ -79,7 +79,7 @@ public class UsuarioController {
             @ApiResponse(code = 500, message = "Error interno de servidor")
     })
     public Resource<usuario> one(@PathVariable("rut") Long rut ){
-        logger.info("obtener OC por id {}", rut);
+        logger.info("obtener Usuarios por id {}", rut);
 
         if(!UsuarioRepository.findById(rut).isPresent() ) {
             throw new UsuarioNoExistException(rut);
