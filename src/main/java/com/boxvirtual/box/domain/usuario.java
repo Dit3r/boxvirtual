@@ -73,6 +73,12 @@ public class usuario {
     @Column(name = "APMATERNO", length = 60,columnDefinition = "apellido materno usuario")
     private String apmaterno;
 
+
+    @OneToMany(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID", insertable = false, updatable = false)
+    private List<video> videoList;
+
+
     public Long getId() {
         return id;
     }
@@ -152,5 +158,14 @@ public class usuario {
 
     public void setApmaterno(String apmaterno) {
         this.apmaterno = apmaterno;
+    }
+
+
+    public List<video> getVideoList() {
+        return videoList;
+    }
+
+    public void setVideoList(List<video> videoList) {
+        this.videoList = videoList;
     }
 }

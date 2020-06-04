@@ -101,10 +101,10 @@ public class VideoController {
     @GetMapping(path = "ultimovideo/{idUsuario}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
     @ApiOperation(value = "obtener ultimo con id",
-            notes = "obtener una oc con id" ,
+            notes = "obtener ultimo con id" ,
             response = video.class, responseContainer = "pos")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Usuario encontrado"),
+            @ApiResponse(code = 200, message = "Video encontrado"),
             @ApiResponse(code = 405, message = "Recurso no existe"),
             @ApiResponse(code = 500, message = "Error interno de servidor")
     })
@@ -130,8 +130,8 @@ public class VideoController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
-    @ApiOperation(value = "crear carta",
-            notes = "crear carta" ,
+    @ApiOperation(value = "crear video",
+            notes = "crear video" ,
             response = video.class, responseContainer = "pos")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Video Creado"),
@@ -152,6 +152,7 @@ public class VideoController {
         return ResponseEntity
                 .created(new URI(resource.getId().expand().getHref()))
                 .body(resource);
+
     }
 
 
@@ -174,8 +175,12 @@ public class VideoController {
         video patch = VideoRepository.findById(id)
                 .map(video -> {
 
-                    video.setEstado(inVideo.getEstado());
-                    //todo:en duda si se cambia el login category
+                   if(inVideo.getEstado() != null) {
+                       video.setEstado(inVideo.getEstado());
+                   }
+                   if(inVideo.getVigente() != null) {
+                       video.setVigente(inVideo.getVigente());
+                   }
 
                     return VideoRepository.save(video);
                 })

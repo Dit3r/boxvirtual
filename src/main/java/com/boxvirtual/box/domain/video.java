@@ -7,24 +7,25 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
 @Data
 @Table(name = "VIDEOUSUARIO")
 @JsonIgnoreProperties(ignoreUnknown=true)
-@JsonPropertyOrder(value = {"id","idUsuario","fechaHora","estado"})
+@JsonPropertyOrder(value = {"id","idUsuario","fechaHora","estado","vigente"})
 
 public class video {
 
+
+
     @Id
-    @ApiModelProperty(notes = "id de la tabla")
-    @JsonProperty(value = "id",required = true)
+    @ApiModelProperty(notes = "id de la tabla", required = true)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_video")
+    @SequenceGenerator(name = "seq_video", sequenceName = "seq_video", allocationSize = 1)
     @Column(name = "ID", length = 12,columnDefinition = "id de la tabla")
     private Long id;
 
@@ -42,6 +43,21 @@ public class video {
     @JsonProperty(value = "estado",required = true)
     @Column(name = "ESTADO", length = 50,columnDefinition = "estado video")
     private Long estado;
+
+    @ApiModelProperty(notes = "vigencia video")
+    @JsonProperty(value = "vigente",required = true)
+    @Column(name = "VIGENTE", length = 50,columnDefinition = "vigencia video")
+    private Long vigente;
+
+
+
+
+    @OneToMany(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "ID_VIDEO", referencedColumnName = "ID", insertable = false, updatable = false)
+    private List<datosMedicos> datosMedicosList;
+
+
+
 
     public Long getId() {
         return id;
@@ -73,5 +89,25 @@ public class video {
 
     public void setEstado(Long estado) {
         this.estado = estado;
+    }
+
+    public Long getVigente() {
+        return vigente;
+    }
+
+    public void setVigente(Long vigente) {
+        this.vigente = vigente;
+
+    }
+
+
+
+
+    public List<datosMedicos> getDatosMedicosList() {
+        return datosMedicosList;
+    }
+
+    public void setDatosMedicosList(List<datosMedicos> datosMedicosList) {
+        this.datosMedicosList = datosMedicosList;
     }
 }
